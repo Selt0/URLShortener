@@ -7,8 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 ActiveRecord::Base.transaction do
-  u1 = User.create!(email: 'cwhite@gmail.com', premium: true)
-  u2 = User.create!(email: 'bwarford@gmail.com')
+  u1 = User.create!(email: 'tester@yahoo.com', premium: true)
+  u2 = User.create!(email: 'test@gmail.com')
 
   su1 = ShortenedUrl.create_for_user_and_long_url!(
     u1, 'www.google.com'

@@ -13,10 +13,12 @@ class CLI
   end
 
   def login_user!
-    puts 'input your email:'
+    puts 'Input your email:'
     @current_user = User.find_by(email: gets.chomp)
 
-    raise 'That user doens\'t exist' if @current_user.nil?
+    if @current_user.nil?
+      raise 'That user doesn\'t exist'
+    end
 
     nil
   end
@@ -24,10 +26,10 @@ class CLI
   def run
     login_user!
 
+    puts
     puts 'What do you want to do?'
-    puts '0. Create a shortened URL'
-    puts '1. Visit a shortened URL'
-
+    puts '0. Create shortened URL'
+    puts '1. Visit shortened URL'
     option = Integer(gets.chomp)
 
     case option
@@ -39,12 +41,18 @@ class CLI
   end
 
   def visit_url
+    puts
     puts 'Type in the shortened URL'
     short_url = gets.chomp
 
     shortened_url = ShortenedUrl.find_by(short_url: short_url)
 
-    raise "no such url found!" if shortened_url.nil?
+    puts
+    puts "Launching #{shortened_url.long_url} ..."
+    puts "Goodbye!"
+    puts
+
+    raise 'no such url found!' if shortened_url.nil?
 
     Visit.record_visit!(@current_user, shortened_url)
     Launchy.open(shortened_url.long_url)
